@@ -7,7 +7,7 @@ import { QuestionCard } from '@/components/QuestionCard';
 import { ScoreSelector } from '@/components/ScoreSelector';
 import { clinicConfig, STORAGE_KEYS } from '@/data/config';
 import { ageOptions, genderOptions, initialFormState, reasonOptions, type SurveyFormErrors, type SurveyFormState } from '@/data/questions';
-import { createSurveyPayload, validateSurvey } from '@/lib/survey';
+import { createSurveyPayload, isGoogleReviewEligible, validateSurvey } from '@/lib/survey';
 
 export default function SurveyPage() {
   const router = useRouter();
@@ -15,12 +15,12 @@ export default function SurveyPage() {
   const [errors, setErrors] = useState<SurveyFormErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
-  const medicalRef = useRef<HTMLElement>(null);
+  const waitingTimeRef = useRef<HTMLElement>(null);
   const staffRef = useRef<HTMLElement>(null);
 
   const update = <K extends keyof SurveyFormState>(field: K, value: SurveyFormState[K]) => {
     setForm((current) => ({ ...current, [field]: value }));
-    if (field === 'medicalCareRating' || field === 'staffRating') {
+    if (field === 'waitingTimeRating' || field === 'staffRating') {
       setErrors((current) => ({ ...current, [field]: undefined }));
     }
   };
@@ -32,7 +32,7 @@ export default function SurveyPage() {
   };
 
   const focusFirstError = (nextErrors: SurveyFormErrors) => {
-    const target = nextErrors.medicalCareRating ? medicalRef.current : staffRef.current;
+    const target = nextErrors.waitingTimeRating ? waitingTimeRef.current : staffRef.current;
     requestAnimationFrame(() => {
       target?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       target?.querySelector<HTMLButtonElement>('button')?.focus({ preventScroll: true });
@@ -68,6 +68,10 @@ export default function SurveyPage() {
 
     sessionStorage.setItem(STORAGE_KEYS.totalScore, String(payload.totalScore));
     sessionStorage.setItem(STORAGE_KEYS.comment, payload.comments);
+    sessionStorage.setItem(
+      STORAGE_KEYS.showReview,
+      isGoogleReviewEligible(payload.waitingTimeRating, payload.staffRating) ? '1' : '0',
+    );
     router.push('/thanks');
   };
 
@@ -80,7 +84,10 @@ export default function SurveyPage() {
         <section className="intro">
           <p className="eyebrow">PATIENT SURVEY</p>
           <h1>患者様アンケート</h1>
-          <p>本日は水谷眼科診療所へご来院いただきありがとうございます。<br />今後の診療・サービス改善のため、アンケートへのご協力をお願いいたします。</p>
+          <p className="intro-copy">
+            <span className="intro-line">本日は水谷眼科診療所へご来院いただきありがとうございます。</span>
+            <span className="intro-line">今後の診療・サービス改善のため、アンケートへのご協力をお願いいたします。</span>
+          </p>
           <aside><strong>匿名でご回答いただけます</strong><br />いただいた内容は、診療・サービス改善のために活用いたします。</aside>
         </section>
 
@@ -97,9 +104,9 @@ export default function SurveyPage() {
             </div>
           </QuestionCard>
 
-          <div ref={medicalRef as React.RefObject<HTMLDivElement>}>
-            <QuestionCard number={3} title="診療内容には満足いただけましたか？" required error={errors.medicalCareRating} errorId="medical-error">
-              <ScoreSelector name="medical" value={form.medicalCareRating} onChange={(value) => update('medicalCareRating', value)} hasError={!!errors.medicalCareRating} describedBy={errors.medicalCareRating ? 'medical-error' : undefined} />
+          <div ref={waitingTimeRef as React.RefObject<HTMLDivElement>}>
+            <QuestionCard number={3} title="待ち時間には満足いただけましたか？" required error={errors.waitingTimeRating} errorId="waiting-time-error">
+              <ScoreSelector name="waiting-time" value={form.waitingTimeRating} onChange={(value) => update('waitingTimeRating', value)} hasError={!!errors.waitingTimeRating} describedBy={errors.waitingTimeRating ? 'waiting-time-error' : undefined} />
             </QuestionCard>
           </div>
 

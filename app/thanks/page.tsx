@@ -8,6 +8,7 @@ import { clinicConfig, STORAGE_KEYS } from '@/data/config';
 export default function ThanksPage() {
   const [totalScore, setTotalScore] = useState<number | null>(null);
   const [comment, setComment] = useState('');
+  const [showReview, setShowReview] = useState(false);
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false);
 
@@ -16,6 +17,7 @@ export default function ThanksPage() {
       const storedScore = sessionStorage.getItem(STORAGE_KEYS.totalScore);
       setTotalScore(storedScore === null ? null : Number(storedScore));
       setComment(sessionStorage.getItem(STORAGE_KEYS.comment) || '');
+      setShowReview(sessionStorage.getItem(STORAGE_KEYS.showReview) === '1');
     });
     return () => cancelAnimationFrame(frame);
   }, []);
@@ -54,7 +56,7 @@ export default function ThanksPage() {
           </section>
         )}
 
-        {clinicConfig.googleReviewUrl && (
+        {showReview && clinicConfig.googleReviewUrl && (
           <section className="review-card">
             <h2>よろしければ、<br />Googleでもご感想をお聞かせください。</h2>
             {comment && (

@@ -14,19 +14,19 @@ export const reasonOptions = [
 export type SurveyFormState = {
   gender: string;
   ageGroup: string;
-  medicalCareRating: number | null;
+  waitingTimeRating: number | null;
   staffRating: number | null;
   reasons: string[];
   otherReason: string;
   comments: string;
 };
 
-export type SurveyFormErrors = Partial<Record<'medicalCareRating' | 'staffRating', string>>;
+export type SurveyFormErrors = Partial<Record<'waitingTimeRating' | 'staffRating', string>>;
 
 export const initialFormState: SurveyFormState = {
   gender: '',
   ageGroup: '',
-  medicalCareRating: null,
+  waitingTimeRating: null,
   staffRating: null,
   reasons: [],
   otherReason: '',

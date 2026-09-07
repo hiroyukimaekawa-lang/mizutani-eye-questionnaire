@@ -5,7 +5,7 @@
 - `CODEX_TASK.md` を本案件の最優先仕様とする。
 - `sangrier-ques-system` から、Next.js App Router、GAS への `no-cors` 送信、送信中・通信エラー状態、`sessionStorage` を使ったサンクス画面への回答引き継ぎを参考にする。
 - `kawaratani-clinic-questionnaire` から、スマートフォンで横一列に並ぶ 1〜10 の丸型評価UIとクリニック向けの簡潔な画面構成を参考にする。
-- 参考実装にある「点数でGoogle口コミ導線を表示・非表示に分ける処理」は採用しない。口コミURLが設定されている全回答者に同じCTAを表示する。
+- Google口コミ導線は、待ち時間とスタッフ対応がともに9点以上の回答者にだけ表示する。
 - Builderの共通基盤仕様は将来構想も含むため、本案件では `CODEX_TASK.md` に指定された単院向け Next.js + GAS 構成を採用する。
 - 公式サイトの清潔感と指定ブランドカラー `#5E969E` を基調に、白背景、十分な余白、大きな文字・タップ領域で構成する。
 
@@ -72,6 +72,6 @@ README.md
 - GAS URL設定時の送信と通信エラー時の再試行
 - 送信中表示と二重送信防止
 - `/thanks` 遷移と低評価メッセージ
-- Google口コミURL未設定時はCTA非表示、設定時は点数に関係なく表示
+- Google口コミCTAは、待ち時間とスタッフ対応がともに9点以上の場合だけ表示
 - 375px / 390px / 430pxで横スクロールなし
 - lint、TypeScript、unit test、production build
