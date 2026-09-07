@@ -1,9 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const read = (path: string) => readFileSync(join(import.meta.dirname, '..', path), 'utf8');
+const here = dirname(fileURLToPath(import.meta.url));
+const read = (path: string) => readFileSync(join(here, '..', path), 'utf8');
 
 test('Thanks見出しは語尾を分断しない意味単位で保持する', () => {
   const page = read('app/thanks/page.tsx');
