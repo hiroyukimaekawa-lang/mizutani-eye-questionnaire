@@ -49,6 +49,10 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visib
 .choice { min-width: 0; min-height: 48px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; color: #34494c; border: 1px solid #d8e2e3; border-radius: 12px; cursor: pointer; font-size: 14px; line-height: 1.45; }
 .choice:has(input:checked) { color: #315f66; background: #edf6f7; border-color: #5e969e; font-weight: 700; }
 .choice input { width: 19px; height: 19px; flex: none; margin: 0; accent-color: #5e969e; }
+.age-select-wrap { position: relative; width: 100%; min-width: 0; }
+.age-select-wrap::after { content: ""; position: absolute; top: 50%; right: 18px; width: 8px; height: 8px; border-right: 2px solid #4e858d; border-bottom: 2px solid #4e858d; transform: translateY(-70%) rotate(45deg); pointer-events: none; }
+.age-select { appearance: none; -webkit-appearance: none; display: block; width: 100%; max-width: 100%; min-width: 0; min-height: 52px; padding: 12px 42px 12px 12px; color: #34494c; background: #fbfdfd; border: 1px solid #d8e2e3; border-radius: 12px; font: inherit; font-size: 16px; line-height: 1.5; text-overflow: ellipsis; cursor: pointer; }
+.age-select:focus-visible { border-color: #5e969e; outline: 3px solid rgba(94,150,158,.36); outline-offset: 3px; }
 .score-row { width: 100%; display: grid; grid-template-columns: repeat(10, minmax(0,1fr)); gap: 4px; }
 .score-button { width: 100%; aspect-ratio: 1; min-width: 0; padding: 0; display: grid; place-items: center; color: #4b6265; background: white; border: 1px solid #b9c9cb; border-radius: 50%; font-size: 11px; font-weight: 700; cursor: pointer; }
 .score-button[data-selected="true"] { color: white; background: #5e969e; border-color: #5e969e; box-shadow: 0 3px 10px rgba(94,150,158,.3); }

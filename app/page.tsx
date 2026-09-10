@@ -99,8 +99,11 @@ export default function SurveyPage() {
           </QuestionCard>
 
           <QuestionCard number={2} title="年代を教えてください。">
-            <div className="choice-grid" role="radiogroup" aria-label="年代">
-              {ageOptions.map((option) => <label key={option} className="choice"><input type="radio" name="ageGroup" value={option} checked={form.ageGroup === option} onChange={() => update('ageGroup', option)} /><span>{option}</span></label>)}
+            <div className="age-select-wrap">
+              <select id="ageGroup" name="ageGroup" aria-labelledby="question-2" className="age-select" value={form.ageGroup} onChange={(event) => update('ageGroup', event.target.value)}>
+                <option value="">年代を選択してください</option>
+                {ageOptions.map((option) => <option key={option} value={option}>{option}</option>)}
+              </select>
             </div>
           </QuestionCard>
 
