@@ -15,13 +15,14 @@ test('合計と平均を計算する', () => {
   assert.deepEqual(calculateScores(10, 10), { totalScore: 20, averageScore: 10 });
 });
 
-test('複数選択・その他・スコアをpayloadへ保存する', () => {
+test('複数選択・その他・スコア・医院キーをpayloadへ保存する', () => {
   const payload = createSurveyPayload({
     ...initialFormState,
     gender: '回答しない', ageGroup: '70代以上', waitingTimeRating: 8, staffRating: 7,
     reasons: ['自宅・職場から近い', 'その他'], otherReason: '看板を見て', comments: ' 丁寧でした。 ',
   }, '2026-08-31T00:00:00.000Z');
   assert.deepEqual(payload, {
+    clinicKey: 'mizutani',
     submittedAt: '2026-08-31T00:00:00.000Z', gender: '回答しない', ageGroup: '70代以上',
     waitingTimeRating: 8, medicalCareRating: 8, staffRating: 7, totalScore: 15, averageScore: 7.5,
     reasons: ['自宅・職場から近い', 'その他'], otherReason: '看板を見て', comments: '丁寧でした。',
