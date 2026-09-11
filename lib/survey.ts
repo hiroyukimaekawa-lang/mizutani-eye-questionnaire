@@ -1,6 +1,7 @@
 import type { SurveyFormErrors, SurveyFormState } from '@/data/questions';
 
 export type SurveyPayload = {
+  clinicKey: 'mizutani';
   submittedAt: string;
   gender: string;
   ageGroup: string;
@@ -36,6 +37,7 @@ export function createSurveyPayload(form: SurveyFormState, submittedAt = new Dat
     throw new Error('必須の評価が未回答です。');
   }
   return {
+    clinicKey: 'mizutani',
     submittedAt,
     gender: form.gender,
     ageGroup: form.ageGroup,
