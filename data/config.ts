@@ -1,5 +1,5 @@
 export const DEFAULT_GAS_URL =
-  'https://script.google.com/macros/s/AKfycbzrBTYf8Bwmjwbx5BOcqm1jwEzh-TJ0J3dPO-j99gXzy4SmexCE8uZhO6V1rB2mGLg9/exec';
+  'https://script.google.com/macros/s/AKfycbxoGBuRblAo7EYdij2fwr0yeHGkqZrlRfl2yOJ56hXX4wySn7EW4QwkyuREYyoL2jvn/exec';
 
 export const clinicConfig = {
   name: '水谷眼科診療所',
