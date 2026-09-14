@@ -51,19 +51,22 @@ export default function SurveyPage() {
     setSubmitting(true);
     setSubmitError('');
     const payload = createSurveyPayload(form);
-    if (clinicConfig.gasUrl) {
-      try {
-        await fetch(clinicConfig.gasUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(payload),
-          mode: 'no-cors',
-        });
-      } catch {
-        setSubmitting(false);
-        setSubmitError('送信に失敗しました。通信環境をご確認のうえ、もう一度お試しください。');
-        return;
+
+    try {
+      const response = await fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const result = await response.json().catch(() => null) as { error?: string } | null;
+        throw new Error(result?.error || '回答の保存に失敗しました。');
       }
+    } catch (error) {
+      setSubmitting(false);
+      setSubmitError(error instanceof Error ? error.message : '送信に失敗しました。通信環境をご確認のうえ、もう一度お試しください。');
+      return;
     }
 
     sessionStorage.setItem(STORAGE_KEYS.totalScore, String(payload.totalScore));
